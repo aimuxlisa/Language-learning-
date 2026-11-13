@@ -87,6 +87,80 @@ body {
   );
 }
 
+/* Теория урока (markdown) */
+.theory h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.875rem;
+}
+.theory p,
+.theory li {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--fg);
+}
+.theory p + p,
+.theory p + ul,
+.theory ul + p,
+.theory table + p,
+.theory p + table {
+  margin-top: 0.75rem;
+}
+.theory ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.theory li::before {
+  content: "—";
+  color: var(--fg-faint);
+  margin-right: 0.5rem;
+}
+.theory strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+.theory em {
+  color: var(--fg-dim);
+}
+.theory table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+.theory th {
+  text-align: left;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-dim);
+  font-weight: 500;
+}
+.theory th,
+.theory td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.75rem;
+}
+.theory blockquote {
+  border-left: 2px solid var(--accent-yellow);
+  padding: 0.25rem 0 0.25rem 1rem;
+  margin-top: 0.875rem;
+  color: var(--fg-dim);
+}
+.theory code {
+  font-family: var(--font-jbmono), monospace;
+  font-size: 0.85em;
+  background: var(--bg);
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--line);
+}
+.theory del {
+  color: var(--accent-red);
+}
+
 /* Поля форм */
 .input {
   height: 2.75rem;

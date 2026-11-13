@@ -23,17 +23,17 @@
 - [x] Скрипт seed.ts, команда `npm run db:seed` (24 урока, 204 упражнения, 20 карточек)
 
 ## Фаза 3 — Прохождение уроков
-- [ ] /learn: карта уровней со статусами locked/available/completed
-- [ ] Плеер урока: теория → упражнения → результат
-- [ ] Компоненты упражнений: quiz, multi_quiz, gap_fill, word_order, translate
-- [ ] Серверная проверка ответов, подсчёт score, запись user_answers/user_progress
-- [ ] Открытие следующего уровня при ≥70%, выдача карточки, начисление XP
-- [ ] /collection: коллекция карточек
+- [x] /learn: карта уровней со статусами locked/available/completed (+ /exams, /exams/[track])
+- [x] Плеер урока: теория (markdown) → упражнения → результат
+- [x] Компоненты упражнений: quiz, multi_quiz, gap_fill, word_order, translate
+- [x] Серверная проверка ответов, подсчёт score, запись user_answers/user_progress
+- [x] Открытие следующего уровня при ≥70%, выдача карточки, начисление XP (проверено в браузере: урок 1 пройден на 88%)
+- [x] /collection: коллекция карточек
 
 ## Фаза 4 — Listening и Speaking
-- [ ] Listening: TTS (speechSynthesis), упражнение «услышь и напечатай/выбери»
-- [ ] Speaking: SpeechRecognition → текст → отправка на оценку; graceful fallback (skip) в неподдерживаемых браузерах
-- [ ] Индикатор записи, повтор попытки
+- [x] Listening: TTS (speechSynthesis), упражнение «услышь и напечатай/выбери»
+- [x] Speaking: SpeechRecognition → текст → отправка на оценку; graceful fallback (skip) в неподдерживаемых браузерах
+- [x] Индикатор записи, повтор попытки (нужна ручная проверка микрофона в Chrome)
 
 ## Фаза 5 — AI (Claude API)
 - [ ] lib/ai.ts: клиент, промпты, строгий JSON-парсинг

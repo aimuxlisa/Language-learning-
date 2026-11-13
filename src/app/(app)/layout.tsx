@@ -4,6 +4,8 @@ import { AppNav } from "@/components/AppNav";
 import { SignOutButton } from "@/components/SignOutButton";
 import { Flame, Zap } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const session = await requireSession();
   const u = session.user as typeof session.user & {

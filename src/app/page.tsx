@@ -1,69 +1,88 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Robot } from "@/components/Robot";
+import { getSession } from "@/lib/session";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const session = await getSession();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="min-h-screen bg-frame p-3 sm:p-6 flex">
+      <div className="flex-1 bg-bg border border-[#000] flex flex-col">
+        {/* Навбар */}
+        <header className="h-14 border-b border-line flex items-stretch justify-between">
+          <div className="flex items-center gap-2.5 px-5">
+            <span className="w-5 h-5 spectrum rounded-sm" />
+            <span className="font-semibold tracking-tight">LinguaQuest</span>
+          </div>
+          <div className="flex items-stretch">
+            <Link href="/login" className="px-5 flex items-center text-[13px] text-dim border-l border-line hover:text-fg transition-colors">
+              Войти
+            </Link>
+            <Link href="/register" className="px-5 flex items-center text-[13px] border-l border-line bg-fg text-bg font-medium hover:opacity-90 transition-opacity">
+              Начать бесплатно
+            </Link>
+          </div>
+        </header>
+
+        {/* Hero */}
+        <main className="flex-1 grid lg:grid-cols-[1fr_auto_1fr] items-center px-6 lg:px-12 py-16 gap-10">
+          <div className="max-w-md">
+            <p className="mono-label mb-6">Unleash the power of</p>
+            <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
+              <span className="border border-fg px-3 py-0.5 inline-block mb-2">English</span>
+              <br />
+              <span className="spectrum-text">AI Tutor</span>
+            </h1>
+            <p className="text-dim mt-6 leading-relaxed">
+              Изучайте английский в игровой форме: 20 уровней, разбор ошибок от AI,
+              коллекционные карточки и подготовка к ЕГЭ и IELTS.
+            </p>
+            <div className="mt-8 flex gap-3">
+              <Link
+                href={session ? "/dashboard" : "/register"}
+                className="h-11 px-7 bg-fg text-bg text-sm font-medium flex items-center hover:opacity-90 transition-opacity"
+              >
+                {session ? "В кабинет →" : "Начать бесплатно →"}
+              </Link>
+            </div>
+          </div>
+
+          <div className="hidden lg:block">
+            <Robot size={220} />
+          </div>
+
+          <div className="hidden lg:flex flex-col gap-3 justify-self-end text-right">
+            {["Speaking и Listening", "AI-разбор ошибок", "ЕГЭ · IELTS", "And much more"].map((t, i, a) => (
+              <p key={t} className={`mono-label ${i === a.length - 1 ? "opacity-50" : ""}`}>{t}</p>
+            ))}
+          </div>
+        </main>
+
+        {/* Тарифы */}
+        <section className="border-t border-line grid sm:grid-cols-2">
+          <div className="p-6 border-b sm:border-b-0 sm:border-r border-line">
+            <p className="mono-label mb-3">Free</p>
+            <p className="text-2xl font-semibold mb-2">0 ₽</p>
+            <p className="text-dim text-sm leading-relaxed">
+              5 уроков или 20 минут в день · уровни 1–5 · лимит сбрасывается каждые 24 часа.
+            </p>
+          </div>
+          <div className="p-6">
+            <p className="mono-label mb-3 spectrum-text">Pro · скоро</p>
+            <p className="text-2xl font-semibold mb-2">—</p>
+            <p className="text-dim text-sm leading-relaxed">
+              Все 20 уровней без ограничений · экзаменационные треки · приоритетный AI-разбор.
+            </p>
+          </div>
+        </section>
+
+        <footer className="h-12 border-t border-line flex items-center justify-between px-5">
+          <span className="mono-label">LinguaQuest × 2026</span>
+          <span className="mono-label">EN · RU</span>
+        </footer>
+      </div>
     </div>
   );
 }
