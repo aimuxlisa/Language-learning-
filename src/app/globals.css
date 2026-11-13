@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0a0a0c;
+  --bg-raised: #101014;
+  --bg-frame: #c9c6c0; /* внешняя рамка-паспарту */
+  --line: #26262b;
+  --fg: #f2f2f0;
+  --fg-dim: #8b8b93;
+  --fg-faint: #55555e;
+  --accent-blue: #4f7cff;
+  --accent-green: #3ecf6e;
+  --accent-yellow: #ffd23e;
+  --accent-orange: #ff8a3d;
+  --accent-red: #ff4f5e;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-raised: var(--bg-raised);
+  --color-frame: var(--bg-frame);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-dim: var(--fg-dim);
+  --color-faint: var(--fg-faint);
+  --color-ablue: var(--accent-blue);
+  --color-agreen: var(--accent-green);
+  --color-ayellow: var(--accent-yellow);
+  --color-aorange: var(--accent-orange);
+  --color-ared: var(--accent-red);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Спектральный градиент-акцент */
+.spectrum {
+  background: linear-gradient(
+    90deg,
+    var(--accent-blue),
+    var(--accent-green),
+    var(--accent-yellow),
+    var(--accent-orange),
+    var(--accent-red)
+  );
+}
+
+.spectrum-text {
+  background: linear-gradient(
+    90deg,
+    var(--accent-blue),
+    var(--accent-green),
+    var(--accent-yellow),
+    var(--accent-orange),
+    var(--accent-red)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Градиентная обводка (рамка «экрана» робота, активные элементы) */
+.spectrum-border {
+  position: relative;
+  background: var(--bg-raised);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.spectrum-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    var(--accent-blue),
+    var(--accent-green),
+    var(--accent-yellow),
+    var(--accent-orange),
+    var(--accent-red)
+  );
+}
+
+/* Поля форм */
+.input {
+  height: 2.75rem;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 0 0.875rem;
+  font-size: 0.875rem;
+  color: var(--fg);
+  outline: none;
+}
+.input:focus {
+  border-color: var(--fg-dim);
+}
+.input::placeholder {
+  color: var(--fg-faint);
+}
+
+/* Моноширинная микро-подпись */
+.mono-label {
+  font-family: var(--font-jbmono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
