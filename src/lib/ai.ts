@@ -1,9 +1,11 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { allowAi } from "./rate-limit";
 
 const MODEL = "claude-haiku-5-5";
 
-function client(): Anthropic | null {
+function client(userId?: string): Anthropic | null {
   if (!process.env.ANTHROPIC_API_KEY) return null;
+  if (userId && !allowAi(userId)) return null;
   return new Anthropic();
 }
 
@@ -40,8 +42,9 @@ export async function evaluateFree(
   taskPrompt: string,
   reference: string,
   given: string,
+  userId?: string,
 ): Promise<Evaluation> {
-  const c = client();
+  const c = client(userId);
   if (!c) {
     const sim = tokenSimilarity(reference, given);
     return {
@@ -89,9 +92,10 @@ export type ReviewItem = {
 /** Разбор ошибок урока. */
 export async function reviewMistakes(
   mistakes: { exerciseId: string; prompt: string; reference: string; given: string }[],
+  userId?: string,
 ): Promise<ReviewItem[]> {
   if (mistakes.length === 0) return [];
-  const c = client();
+  const c = client(userId);
   if (!c) {
     return mistakes.map((m) => ({
       exerciseId: m.exerciseId,

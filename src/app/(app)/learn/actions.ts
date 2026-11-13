@@ -133,6 +133,7 @@ export async function finishLesson(
       JSON.parse(ex.dataJson),
       JSON.parse(ex.answerJson),
       value,
+      userId,
     );
     results.push({ exerciseId: ex.id, ...graded });
     if (!graded.isCorrect) {
@@ -211,7 +212,7 @@ export async function finishLesson(
   });
 
   // AI-разбор ошибок (кэшируется по попытке)
-  const review = await reviewMistakes(mistakes);
+  const review = await reviewMistakes(mistakes, userId);
   if (mistakes.length > 0) {
     await db.insert(aiReviews).values({
       userId,

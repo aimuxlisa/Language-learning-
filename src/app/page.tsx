@@ -27,8 +27,8 @@ export default async function Home() {
         </header>
 
         {/* Hero */}
-        <main className="flex-1 grid lg:grid-cols-[1fr_auto_1fr] items-center px-6 lg:px-12 py-16 gap-10">
-          <div className="max-w-md">
+        <main className="flex-1 grid lg:grid-cols-[1fr_auto_1fr] items-center px-6 lg:px-12 py-16 gap-10 grid-bg">
+          <div className="max-w-md fade-up">
             <p className="mono-label mb-6">Unleash the power of</p>
             <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
               <span className="border border-fg px-3 py-0.5 inline-block mb-2">English</span>
@@ -49,13 +49,13 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:block fade-up-slow delay-1">
             <Robot size={220} />
           </div>
 
-          <div className="hidden lg:flex flex-col gap-3 justify-self-end text-right">
-            {["Speaking и Listening", "AI-разбор ошибок", "ЕГЭ · IELTS", "And much more"].map((t, i, a) => (
-              <p key={t} className={`mono-label ${i === a.length - 1 ? "opacity-50" : ""}`}>{t}</p>
+          <div className="hidden lg:flex flex-col gap-3 justify-self-end text-right cycle-labels fade-up delay-2">
+            {["Speaking и Listening", "AI-разбор ошибок", "ЕГЭ · IELTS", "And much more"].map((t) => (
+              <p key={t} className="mono-label">{t}</p>
             ))}
           </div>
         </main>

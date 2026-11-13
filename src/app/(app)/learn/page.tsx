@@ -27,7 +27,7 @@ export default async function LearnPage() {
   const best = new Map(progress.map((p) => [p.levelId, p.bestScore]));
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
+    <div className="max-w-4xl mx-auto px-6 py-10 fade-up">
       <p className="mono-label mb-2">Общий курс</p>
       <h1 className="text-3xl font-semibold tracking-tight mb-8">
         20 уровней: от A1 до B2

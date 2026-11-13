@@ -29,6 +29,7 @@ export async function gradeExercise(
   data: Answer,
   answer: Answer,
   value: unknown,
+  userId?: string,
 ): Promise<GradeResult> {
   switch (type) {
     case "quiz": {
@@ -91,6 +92,7 @@ export async function gradeExercise(
         prompt,
         reference,
         given,
+        userId,
       );
       return {
         isCorrect: evaluation.score >= 60,

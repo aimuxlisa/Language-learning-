@@ -19,7 +19,7 @@ export default async function CollectionPage() {
   const owned = new Set(mine.map((c) => c.cardId));
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10">
+    <div className="max-w-4xl mx-auto px-6 py-10 fade-up">
       <p className="mono-label mb-2">Коллекция</p>
       <h1 className="text-3xl font-semibold tracking-tight mb-2">
         Карточки: {owned.size} / {all.length}

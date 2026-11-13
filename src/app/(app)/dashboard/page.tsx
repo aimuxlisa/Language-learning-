@@ -63,7 +63,7 @@ export default async function DashboardPage() {
   const completedGeneral = generalLevels.filter((l) => completedIds.has(l.id)).length;
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <div className="max-w-5xl mx-auto px-6 py-10 fade-up">
       {/* Приветствие */}
       <div className="flex items-start justify-between gap-6 mb-10">
         <div>

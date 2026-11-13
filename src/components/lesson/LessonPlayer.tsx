@@ -99,7 +99,7 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
   // ---------- Теория ----------
   if (stage === "theory") {
     return (
-      <div className="max-w-2xl mx-auto px-6 py-10">
+      <div className="max-w-2xl mx-auto px-6 py-10 fade-up">
         <Header level={level} />
         <article className="theory border border-line bg-raised px-6 py-6 mb-8">
           <Markdown remarkPlugins={[remarkGfm]}>{level.theoryMd}</Markdown>
@@ -152,6 +152,7 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
         <div className="h-full spectrum transition-all" style={{ width: `${progress}%` }} />
       </div>
 
+      <div key={ex.id} className="fade-up">
       <h2 className="text-xl font-medium mb-6 leading-snug">{ex.prompt}</h2>
 
       <div className="mb-8">
@@ -201,6 +202,8 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
         )}
       </div>
 
+      </div>
+
       {error && <p className="text-aorange text-sm mb-4">{error}</p>}
 
       <div className="flex justify-end">
@@ -244,7 +247,7 @@ function Results({
   const mistakes = exercises.filter((e) => byId.get(e.id)?.isCorrect === false);
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-10">
+    <div className="max-w-2xl mx-auto px-6 py-10 fade-up">
       <div className="flex flex-col items-center text-center gap-5 mb-10">
         <Robot size={110} face={result.passed ? "^_^" : "T_T"} />
         <div>

@@ -1,8 +1,19 @@
 /** Маскот — робот с градиентной рамкой «экрана». size — ширина в px. */
-export function Robot({ size = 160, face = "^_^" }: { size?: number; face?: string }) {
+export function Robot({
+  size = 160,
+  face = "^_^",
+  animated = true,
+}: {
+  size?: number;
+  face?: string;
+  animated?: boolean;
+}) {
   const s = size;
   return (
-    <div className="flex flex-col items-center select-none" style={{ width: s }}>
+    <div
+      className={`flex flex-col items-center select-none ${animated ? "float" : ""}`}
+      style={{ width: s }}
+    >
       {/* Голова */}
       <div
         className="spectrum-border rounded-2xl"
@@ -13,7 +24,7 @@ export function Robot({ size = 160, face = "^_^" }: { size?: number; face?: stri
           style={{ borderRadius: s * 0.16 }}
         >
           <span
-            className="font-mono text-fg"
+            className={`font-mono text-fg ${animated ? "robot-face" : ""}`}
             style={{ fontSize: s * 0.2, letterSpacing: "0.05em" }}
           >
             {face}
