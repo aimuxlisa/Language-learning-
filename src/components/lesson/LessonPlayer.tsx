@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import { finishLesson, startLesson, type FinishPayload } from "@/app/(app)/learn/actions";
 import { QuizInput, TextInput, WordOrderInput } from "./inputs";
 import { ListeningInput, SpeakingInput } from "./av-inputs";
-import { Robot } from "@/components/Robot";
 
 type Exercise = {
   id: string;
@@ -101,7 +100,7 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
     return (
       <div className="max-w-2xl mx-auto px-6 py-10 fade-up">
         <Header level={level} />
-        <article className="theory border border-line bg-raised px-6 py-6 mb-8">
+        <article className="theory rounded-2xl border border-line card-solid px-6 py-6 mb-8">
           <Markdown remarkPlugins={[remarkGfm]}>{level.theoryMd}</Markdown>
         </article>
         {error && <p className="text-aorange text-sm mb-4">{error}</p>}
@@ -111,7 +110,7 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
           </Link>
           <button
             onClick={begin}
-            className="h-11 px-7 bg-fg text-bg text-sm font-medium hover:opacity-90 transition-opacity"
+            className="btn-violet h-12 px-7 text-sm font-medium"
           >
             К практике →
           </button>
@@ -124,7 +123,6 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
   if (stage === "finishing") {
     return (
       <div className="max-w-md mx-auto px-6 py-24 flex flex-col items-center gap-6 text-center">
-        <Robot size={100} face="o_o" />
         <p className="text-dim">Проверяем ответы и готовим разбор ошибок…</p>
         <div className="w-48 h-1 bg-line overflow-hidden">
           <div className="h-full w-1/2 spectrum animate-pulse" />
@@ -210,7 +208,7 @@ export function LessonPlayer({ level, exercises }: { level: Level; exercises: Ex
         <button
           onClick={next}
           disabled={!answered}
-          className="h-11 px-7 bg-fg text-bg text-sm font-medium hover:opacity-90 disabled:opacity-30 transition-opacity"
+          className="btn-violet h-12 px-7 text-sm font-medium disabled:opacity-30 disabled:transform-none disabled:shadow-none"
         >
           {idx < exercises.length - 1 ? "Далее →" : "Завершить урок"}
         </button>
@@ -249,7 +247,6 @@ function Results({
   return (
     <div className="max-w-2xl mx-auto px-6 py-10 fade-up">
       <div className="flex flex-col items-center text-center gap-5 mb-10">
-        <Robot size={110} face={result.passed ? "^_^" : "T_T"} />
         <div>
           <p className="mono-label mb-2">{level.title}</p>
           <h1 className="text-4xl font-semibold tracking-tight">
@@ -278,7 +275,7 @@ function Results({
       )}
 
       {mistakes.length > 0 && (
-        <section className="border border-line mb-8">
+        <section className="rounded-2xl border border-line card-solid overflow-hidden mb-8">
           <div className="px-5 py-3 border-b border-line mono-label">
             Разбор ошибок · {mistakes.length}
           </div>
@@ -309,14 +306,14 @@ function Results({
           {!result.passed && (
             <button
               onClick={() => location.reload()}
-              className="h-11 px-6 border border-line text-sm hover:border-dim transition-colors"
+              className="h-12 px-6 rounded-full border border-line text-sm hover:border-violet transition-colors"
             >
               Ещё раз
             </button>
           )}
           <Link
             href="/dashboard"
-            className="h-11 px-6 bg-fg text-bg text-sm font-medium flex items-center hover:opacity-90 transition-opacity"
+            className="btn-violet h-12 px-6 text-sm font-medium flex items-center"
           >
             В кабинет →
           </Link>

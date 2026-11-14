@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import { user } from "@/db/schema";
+import { user, xpLog } from "@/db/schema";
 
 /** XP за пройденный уровень: базово 50 + бонус за точность. */
 export function lessonXp(scorePercent: number): number {
@@ -44,14 +44,17 @@ export async function dailyCheckin(userId: string): Promise<{
     .update(user)
     .set({ streakCount: streak, lastCheckinAt: now, xp: u.xp + bonusXp, updatedAt: now })
     .where(eq(user.id, userId));
+  await db.insert(xpLog).values({ userId, amount: bonusXp, createdAt: now });
 
   return { streak, bonusXp, checkedInNow: true };
 }
 
 export async function addXp(userId: string, amount: number) {
   const [u] = await db.select().from(user).where(eq(user.id, userId));
+  const now = new Date();
   await db
     .update(user)
-    .set({ xp: u.xp + amount, updatedAt: new Date() })
+    .set({ xp: u.xp + amount, updatedAt: now })
     .where(eq(user.id, userId));
+  await db.insert(xpLog).values({ userId, amount, createdAt: now });
 }

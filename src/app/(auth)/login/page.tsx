@@ -1,6 +1,6 @@
 import { AuthForm } from "@/components/AuthForm";
 
-export const metadata = { title: "Вход — LinguaQuest" };
+export const metadata = { title: "Вход — 4 your learning" };
 
 export default function LoginPage() {
   return (

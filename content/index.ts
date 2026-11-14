@@ -5,4 +5,6 @@ import { levelsD } from "./levels-d";
 import { examLevels } from "./exams";
 
 export { cards } from "./cards";
-export const allLevels = [...levelsA, ...levelsB, ...levelsC, ...levelsD, ...examLevels];
+import { starterLevels } from "./starter";
+
+export const allLevels = [...levelsA, ...levelsB, ...levelsC, ...levelsD, ...examLevels, ...starterLevels];

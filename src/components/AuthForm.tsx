@@ -73,13 +73,13 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
       </Field>
 
       {error && (
-        <p className="text-ared text-sm border border-ared/40 bg-ared/5 px-3 py-2">{error}</p>
+        <p className="text-ared text-sm border border-ared/40 bg-ared/5 rounded-xl px-3 py-2">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={loading}
-        className="h-11 bg-fg text-bg font-medium text-sm tracking-wide hover:opacity-90 disabled:opacity-50 transition-opacity"
+        className="btn-violet h-12 font-medium text-sm tracking-wide disabled:opacity-50"
       >
         {loading ? "…" : mode === "register" ? "Создать аккаунт" : "Войти"}
       </button>

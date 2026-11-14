@@ -6,7 +6,6 @@ import { requireSession } from "@/lib/session";
 import { getFreeLimit } from "@/lib/limits";
 import { isLevelUnlocked } from "../actions";
 import { LessonPlayer } from "@/components/lesson/LessonPlayer";
-import { Robot } from "@/components/Robot";
 
 export default async function LessonPage({
   params,
@@ -87,7 +86,6 @@ function Blocked({
 }) {
   return (
     <div className="max-w-md mx-auto px-6 py-20 flex flex-col items-center text-center gap-6">
-      <Robot size={100} face="-_-" />
       <div>
         <h1 className="text-2xl font-semibold tracking-tight mb-2">{title}</h1>
         <p className="text-dim leading-relaxed">{text}</p>

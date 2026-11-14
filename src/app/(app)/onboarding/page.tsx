@@ -2,10 +2,10 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { user } from "@/db/schema";
+import Link from "next/link";
 import { requireSession } from "@/lib/session";
-import { Robot } from "@/components/Robot";
 
-export const metadata = { title: "Выбор уровня — LinguaQuest" };
+export const metadata = { title: "Выбор уровня — 4 your learning" };
 
 const options = [
   {
@@ -45,7 +45,6 @@ export default async function OnboardingPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-14 flex flex-col items-center gap-10">
-      <Robot size={120} face="?_?" />
       <div className="text-center">
         <p className="mono-label mb-3">Шаг 1 из 1</p>
         <h1 className="text-3xl font-semibold tracking-tight">
@@ -53,13 +52,16 @@ export default async function OnboardingPage() {
         </h1>
         <p className="text-dim mt-2">От этого зависит сложность заданий. Изменить можно в настройках.</p>
       </div>
+      <Link href="/onboarding/test" className="btn-ghost h-11 px-6 text-sm font-medium flex items-center -mt-4">
+        Пройти тест на уровень (5 вопросов)
+      </Link>
       <form action={setDifficulty} className="grid sm:grid-cols-3 gap-3 w-full">
         {options.map((o) => (
           <button
             key={o.value}
             name="difficulty"
             value={o.value}
-            className="text-left border border-line bg-raised p-5 hover:border-dim transition-colors group"
+            className="text-left rounded-2xl border border-line card-solid p-5 hover:border-violet transition-colors group"
           >
             <p className="mono-label mb-4 group-hover:spectrum-text">{o.mono}</p>
             <p className="font-medium mb-1.5">{o.title}</p>

@@ -6,23 +6,26 @@ import { usePathname } from "next/navigation";
 const items = [
   { href: "/dashboard", label: "Обзор" },
   { href: "/learn", label: "Уроки" },
+  { href: "/languages", label: "Языки" },
   { href: "/exams", label: "Экзамены" },
   { href: "/collection", label: "Коллекция" },
+  { href: "/review", label: "Повторение" },
+  { href: "/leaderboard", label: "Рейтинг" },
   { href: "/settings", label: "Настройки" },
 ];
 
 export function AppNav() {
   const pathname = usePathname();
   return (
-    <nav className="flex items-stretch overflow-x-auto">
+    <nav className="flex flex-wrap items-center gap-1">
       {items.map((item) => {
         const active = pathname.startsWith(item.href);
         return (
           <Link
             key={item.href}
             href={item.href}
-            className={`px-4 flex items-center text-[13px] border-l border-line whitespace-nowrap transition-colors ${
-              active ? "text-fg bg-raised" : "text-dim hover:text-fg"
+            className={`px-3.5 h-9 flex items-center rounded-full text-[13px] whitespace-nowrap transition-all ${
+              active ? "text-fg bg-raised border border-line" : "text-dim hover:text-fg"
             }`}
           >
             {item.label}

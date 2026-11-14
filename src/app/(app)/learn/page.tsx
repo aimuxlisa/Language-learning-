@@ -1,21 +1,24 @@
 import Link from "next/link";
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { Lock, Check } from "lucide-react";
 import { db } from "@/db";
 import { levels, user, userProgress } from "@/db/schema";
 import { requireSession } from "@/lib/session";
 import { FREE_MAX_LEVEL_INDEX } from "@/lib/limits";
+import { getLanguageContext, languageOf } from "@/lib/languages";
 
-export const metadata = { title: "Уроки — LinguaQuest" };
+export const metadata = { title: "Уроки — 4 your learning" };
 
 export default async function LearnPage() {
   const session = await requireSession();
   const [u] = await db.select().from(user).where(eq(user.id, session.user.id));
+  const lang = await getLanguageContext(session.user.id);
+  const langInfo = languageOf(lang.active);
 
   const all = await db
     .select()
     .from(levels)
-    .where(eq(levels.track, "general"))
+    .where(and(eq(levels.track, "general"), eq(levels.language, lang.active)))
     .orderBy(asc(levels.orderIndex));
   const progress = await db
     .select()
@@ -28,12 +31,18 @@ export default async function LearnPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-10 fade-up">
-      <p className="mono-label mb-2">Общий курс</p>
+      <p className="mono-label mb-2">Общий курс · {langInfo.flag} {langInfo.name}</p>
       <h1 className="text-3xl font-semibold tracking-tight mb-8">
-        20 уровней: от A1 до B2
+        {all.length === 0 ? "Курс скоро появится" : `${all.length} уровней: от A1 до B2`}
       </h1>
 
-      <div className="border border-line divide-y divide-line">
+      {all.length === 0 && (
+        <p className="text-dim mb-8">
+          Для языка «{langInfo.name}» пока нет курса. Выберите другой язык в переключателе или добавьте этот, когда курс появится.
+        </p>
+      )}
+
+      <div className="rounded-2xl border border-line card-solid divide-y divide-line overflow-hidden">
         {all.map((lvl, i) => {
           const done = completed.has(lvl.id);
           const prevDone = i === 0 || completed.has(all[i - 1].id);

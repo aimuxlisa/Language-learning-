@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0a0a0c;
+  --bg: #060a24;
+  --wave-rgb: 150, 170, 255;
   --bg-raised: #101014;
   --bg-frame: #c9c6c0; /* внешняя рамка-паспарту */
   --line: #26262b;
@@ -13,6 +14,7 @@
   --accent-yellow: #ffd23e;
   --accent-orange: #ff8a3d;
   --accent-red: #ff4f5e;
+  --accent-violet: #7c5cff;
 }
 
 @theme inline {
@@ -28,8 +30,32 @@
   --color-ayellow: var(--accent-yellow);
   --color-aorange: var(--accent-orange);
   --color-ared: var(--accent-red);
+  --color-violet: var(--accent-violet);
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jbmono), ui-monospace, monospace;
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+}
+
+/* Название сайта «4 your learning»: рукописный Momo Signature */
+.wordmark {
+  font-family: var(--font-momo), var(--font-display), cursive;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  font-size: 26px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Светлая тема (переключатель ThemeToggle ставит data-theme="light") */
+:root[data-theme="light"] {
+  --bg: #eef1fb;
+  --wave-rgb: 60, 80, 190;
+  --bg-raised: #ffffff;
+  --line: #e2e2dd;
+  --fg: #111114;
+  --fg-dim: #5b5b63;
+  --fg-faint: #9a9aa3;
+  --grid-line: rgba(0, 0, 0, 0.07);
 }
 
 body {
@@ -38,26 +64,22 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
-/* Спектральный градиент-акцент */
+/* Градиент-акцент (фиолетовый → синий → оранжевый, как в референсе) */
 .spectrum {
   background: linear-gradient(
     90deg,
+    var(--accent-violet),
     var(--accent-blue),
-    var(--accent-green),
-    var(--accent-yellow),
-    var(--accent-orange),
-    var(--accent-red)
+    var(--accent-orange)
   );
 }
 
 .spectrum-text {
   background: linear-gradient(
     90deg,
+    var(--accent-violet),
     var(--accent-blue),
-    var(--accent-green),
-    var(--accent-yellow),
-    var(--accent-orange),
-    var(--accent-red)
+    var(--accent-orange)
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -69,21 +91,20 @@ body {
   position: relative;
   background: var(--bg-raised);
   background-clip: padding-box;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 14px;
 }
 .spectrum-border::before {
   content: "";
   position: absolute;
-  inset: -2px;
+  inset: -1px;
   z-index: -1;
   border-radius: inherit;
   background: linear-gradient(
     135deg,
+    var(--accent-violet),
     var(--accent-blue),
-    var(--accent-green),
-    var(--accent-yellow),
-    var(--accent-orange),
-    var(--accent-red)
+    var(--accent-orange)
   );
 }
 
@@ -144,8 +165,8 @@ body {
 /* Фоновая сетка (hero лендинга) */
 .grid-bg {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line, rgba(255, 255, 255, 0.035)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line, rgba(255, 255, 255, 0.035)) 1px, transparent 1px);
   background-size: 72px 72px;
 }
 
@@ -245,24 +266,256 @@ body {
 /* Поля форм */
 .input {
   height: 2.75rem;
-  background: var(--bg);
+  background: var(--bg-raised);
   border: 1px solid var(--line);
+  border-radius: 12px;
   padding: 0 0.875rem;
   font-size: 0.875rem;
   color: var(--fg);
   outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .input:focus {
-  border-color: var(--fg-dim);
+  border-color: var(--accent-violet);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.18);
 }
 .input::placeholder {
   color: var(--fg-faint);
 }
 
+/* ---------- Референс-стиль (лендинг): фиолетовая пилюля, пиксельный робот ---------- */
+
+.btn-violet {
+  background: var(--accent-violet);
+  color: #fff;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.btn-violet:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px var(--accent-violet);
+  filter: brightness(1.08);
+}
+.btn-ghost {
+  border: 1px solid var(--fg-faint);
+  border-radius: 999px;
+  color: var(--fg);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--fg);
+  transform: translateY(-2px);
+}
+
+/* Мигающие огоньки и пиксельные «пульсы» робота */
+@keyframes led {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+.robot-led {
+  animation: led 1.6s steps(2, end) infinite;
+}
+.robot-led-2 { animation-delay: 0.3s; }
+.robot-led-3 { animation-delay: 0.6s; }
+.robot-led-4 { animation-delay: 0.9s; }
+.robot-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.5s steps(1, end) infinite;
+}
+
+/* ---------- Анимации по референсу: свет, график, появление текста ---------- */
+
+/* Световые лучи на фоне (aurora) */
+.aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora::before,
+.aurora::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  width: 42%;
+  height: 140%;
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: aurora-sway 14s ease-in-out infinite;
+}
+.aurora::before {
+  left: 18%;
+  background: linear-gradient(to bottom, rgba(62, 207, 110, 0.28), transparent 70%);
+}
+.aurora::after {
+  right: 14%;
+  background: linear-gradient(to bottom, rgba(79, 124, 255, 0.18), transparent 70%);
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+@keyframes aurora-sway {
+  0%, 100% { transform: translateX(-4%) scaleX(1); opacity: 0.7; }
+  50% { transform: translateX(5%) scaleX(1.15); opacity: 1; }
+}
+
+/* Бегущий «график свечей» */
+@keyframes candle-bob {
+  0%, 100% { transform: scaleY(0.55); }
+  50% { transform: scaleY(1); }
+}
+.candle {
+  width: 6px;
+  height: calc(var(--h) * 1px);
+  border-radius: 2px;
+  transform-origin: bottom;
+  animation: candle-bob 3.2s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+.candle-up { background: var(--accent-green); }
+.candle-down { background: var(--accent-violet); }
+
+/* Появление заголовка по словам */
+@keyframes reveal-up {
+  from { transform: translateY(105%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+}
+.reveal > span {
+  display: inline-block;
+  animation: reveal-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d);
+}
+
+/* Мерцающие точки */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.9; }
+}
+.twinkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: var(--fg);
+  animation: twinkle 3.5s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+/* Сканирующая рамка по сетке */
+@keyframes scan-box {
+  0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+  50% { transform: translate(120px, 60px); opacity: 1; }
+}
+.scan-box {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border: 1px solid var(--accent-violet);
+  box-shadow: 0 0 24px rgba(124, 92, 255, 0.45);
+  animation: scan-box 8s ease-in-out infinite;
+}
+
+/* Карточки поднимаются при наведении */
+.lift {
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-violet);
+  box-shadow: 0 16px 40px -20px rgba(124, 92, 255, 0.5);
+}
+
+/* Ассистент «летает» плавными кругами в углу, пока чат закрыт */
+@keyframes assistant-drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-18px, -12px); }
+  50% { transform: translate(-6px, -28px); }
+  75% { transform: translate(-24px, -6px); }
+}
+.assistant-drift { animation: assistant-drift 14s ease-in-out infinite; }
+
+/* ---------- Робот: руки, ноги, струи, позы ---------- */
+.rb-arm-l, .rb-arm-r, .rb-leg-l, .rb-leg-r, .rb-head, .rb-jet, .rb-led {
+  transform-origin: 50% 0%;
+}
+.rb-head { transform-origin: 50% 100%; }
+.rb-arm-l { transform-origin: 50% 0%; animation: rb-arm-idle-l 3.2s ease-in-out infinite; }
+.rb-arm-r { transform-origin: 50% 0%; animation: rb-arm-idle-r 3.2s ease-in-out infinite; }
+.rb-leg-l { transform-origin: 50% 0%; animation: rb-leg-idle 3.2s ease-in-out infinite; }
+.rb-leg-r { transform-origin: 50% 0%; animation: rb-leg-idle 3.2s ease-in-out infinite reverse; }
+.rb-jet { opacity: 0; transform-origin: 50% 0%; }
+.rb-led { animation: led 1.6s steps(2, end) infinite; }
+.rb-led-2 { animation-delay: 0.3s; }
+.rb-led-3 { animation-delay: 0.6s; }
+
+@keyframes rb-arm-idle-l { 0%, 100% { transform: rotate(10deg); } 50% { transform: rotate(-6deg); } }
+@keyframes rb-arm-idle-r { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(6deg); } }
+@keyframes rb-leg-idle { 0%, 100% { transform: rotate(4deg); } 50% { transform: rotate(-4deg); } }
+@keyframes rb-wave { 0%, 100% { transform: rotate(-150deg); } 50% { transform: rotate(-125deg); } }
+@keyframes rb-think-head { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(-4deg); } }
+@keyframes rb-fly-body {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-16px) rotate(3deg); }
+}
+@keyframes rb-jet-flame {
+  0%, 100% { transform: scaleY(0.7); opacity: 0.8; }
+  50% { transform: scaleY(1.25); opacity: 1; }
+}
+@keyframes rb-jump { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-22px); } 60% { transform: translateY(-22px); } }
+
+/* Приветствие: правая рука машет */
+.rb-pose-wave .rb-arm-r { animation: rb-wave 1s ease-in-out infinite; }
+/* Раздумья: голова наклонена, правая рука у подбородка */
+.rb-pose-think .rb-head { animation: rb-think-head 2.4s ease-in-out infinite; }
+.rb-pose-think .rb-arm-r { transform: rotate(-70deg); animation: none; }
+/* Полёт: тело парит, руки раскинуты, ноги поджаты, струи горят */
+.rb-pose-fly { animation: rb-fly-body 2.8s ease-in-out infinite; }
+.rb-pose-fly .rb-arm-l { animation: none; transform: rotate(28deg); }
+.rb-pose-fly .rb-arm-r { animation: none; transform: rotate(-28deg); }
+.rb-pose-fly .rb-leg-l, .rb-pose-fly .rb-leg-r { animation: none; transform: rotate(14deg); }
+.rb-pose-fly .rb-leg-r { transform: rotate(-14deg); }
+.rb-pose-fly .rb-jet { opacity: 1; animation: rb-jet-flame 0.5s ease-in-out infinite; }
+/* Прыжок */
+.rb-pose-jump { animation: rb-jump 1.6s ease-in-out infinite; }
+.rb-pose-jump .rb-leg-l, .rb-pose-jump .rb-leg-r { animation: none; transform: rotate(-12deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-arm-l, .rb-arm-r, .rb-leg-l, .rb-leg-r, .rb-head, .rb-jet, .rb-led,
+  .rb-pose-wave .rb-arm-r, .rb-pose-think .rb-head, .rb-pose-fly, .rb-pose-jump,
+  .rb-pose-fly .rb-jet, .rb-pose-jump, .assistant-drift { animation: none; }
+  .robot-led, .robot-eyes, .btn-violet, .btn-ghost,
+  .aurora::before, .aurora::after, .candle, .reveal > span,
+  .twinkle, .scan-box, .lift {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Карточки: непрозрачные, чёрные, с белым текстом — читаются на любом фоне и в обеих темах */
+.card-solid {
+  background: #000;
+  color: #fff;
+  border-color: #2a2a30;
+}
+.card-solid .text-dim,
+.card-solid .mono-label {
+  color: #d4d4dc;
+}
+.card-solid .text-faint {
+  color: #a3a3ad;
+}
+
 /* Моноширинная микро-подпись */
 .mono-label {
   font-family: var(--font-jbmono), ui-monospace, monospace;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--fg-dim);

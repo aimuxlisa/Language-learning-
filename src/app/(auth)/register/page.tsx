@@ -1,6 +1,6 @@
 import { AuthForm } from "@/components/AuthForm";
 
-export const metadata = { title: "Регистрация — LinguaQuest" };
+export const metadata = { title: "Регистрация — 4 your learning" };
 
 export default function RegisterPage() {
   return (

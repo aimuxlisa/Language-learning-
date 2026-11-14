@@ -37,7 +37,7 @@ export default async function ExamTrackPage({
         Подготовка к {TRACKS[track]}
       </h1>
 
-      <div className="border border-line divide-y divide-line">
+      <div className="rounded-2xl border border-line card-solid divide-y divide-line overflow-hidden">
         {all.map((lvl, i) => {
           const done = completed.has(lvl.id);
           const open = i === 0 || completed.has(all[i - 1].id);
