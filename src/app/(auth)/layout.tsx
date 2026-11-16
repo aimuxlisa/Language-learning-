@@ -1,29 +1,27 @@
 import Link from "next/link";
-import { Robot } from "@/components/Robot";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-frame p-3 sm:p-6 flex">
-      <div className="flex-1 bg-bg border border-[#000] flex flex-col">
-        <header className="h-14 border-b border-line flex items-center px-5 justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <span className="w-5 h-5 spectrum rounded-sm" />
-            <span className="font-semibold tracking-tight">LinguaQuest</span>
-          </Link>
-          <span className="mono-label hidden sm:block">AI English Tutor</span>
-        </header>
-        <main className="flex-1 grid lg:grid-cols-2">
-          <div className="hidden lg:flex items-center justify-center border-r border-line">
-            <div className="flex flex-col items-center gap-8">
-              <Robot size={180} />
-              <p className="mono-label">Your English. Leveled up.</p>
-            </div>
-          </div>
-          <div className="flex items-center justify-center p-6">
-            <div className="w-full max-w-sm">{children}</div>
-          </div>
-        </main>
-      </div>
+    <div className="min-h-screen flex flex-col relative">
+      <header className="relative z-10 h-16 px-6 lg:px-12 flex items-center justify-between fade-up">
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="w-5 h-5 bg-violet rounded-sm" />
+          <span className="wordmark">4 your learning</span>
+        </Link>
+        <span className="font-mono text-[11px] tracking-[0.14em] uppercase text-dim hidden sm:block">
+          English · Learning
+        </span>
+      </header>
+      <main className="relative z-10 flex-1 grid lg:grid-cols-2 items-center gap-10 px-6 lg:px-12 py-10">
+        <div className="hidden lg:flex flex-col items-center gap-8 fade-up-slow">
+          <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-dim">
+            Your English. Leveled up.
+          </p>
+        </div>
+        <div className="flex items-center justify-center">
+          <div className="w-full max-w-sm fade-up">{children}</div>
+        </div>
+      </main>
     </div>
   );
 }

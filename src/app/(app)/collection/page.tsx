@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { cards, userCards } from "@/db/schema";
 import { requireSession } from "@/lib/session";
 
-export const metadata = { title: "Коллекция — LinguaQuest" };
+export const metadata = { title: "Коллекция — 4 your learning" };
 
 const RARITY: Record<string, { label: string; cls: string }> = {
   common: { label: "Обычная", cls: "text-dim" },
@@ -33,7 +33,7 @@ export default async function CollectionPage() {
           return (
             <div
               key={c.id}
-              className={`border p-4 flex flex-col gap-2 ${
+              className={`rounded-2xl border p-4 flex flex-col gap-2 ${
                 has ? "border-line bg-raised" : "border-line opacity-35"
               }`}
             >

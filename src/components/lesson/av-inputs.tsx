@@ -128,7 +128,7 @@ export function SpeakingInput({
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="border border-line bg-raised px-5 py-4">
+      <div className="rounded-2xl border border-line bg-raised px-5 py-4">
         <p className="mono-label mb-2">Произнесите фразу</p>
         <p className="text-lg">{text}</p>
         <button
@@ -148,7 +148,7 @@ export function SpeakingInput({
           <button
             type="button"
             onClick={() => onChange("__skipped__")}
-            className={`self-start px-4 h-9 border text-sm transition-colors ${
+            className={`self-start px-4 h-9 rounded-full border text-sm transition-colors ${
               value === "__skipped__" ? "border-fg text-fg" : "border-line text-dim hover:text-fg"
             }`}
           >

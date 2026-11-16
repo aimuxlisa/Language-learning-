@@ -16,7 +16,35 @@ export const user = sqliteTable("user", {
   xp: integer("xp").notNull().default(0),
   streakCount: integer("streak_count").notNull().default(0),
   lastCheckinAt: integer("last_checkin_at", { mode: "timestamp" }),
+  activeLanguage: text("active_language").notNull().default("en"), // язык, который сейчас изучается
+  username: text("username").unique(), // публичный никнейм (3–20 символов: a–z, 0–9, _)
+  leagueTier: integer("league_tier").notNull().default(0), // 0 — Бронза … 9 — Обсидиан
 });
+
+/** Журнал начислений XP (для недельного рейтинга по лигам). */
+export const xpLog = sqliteTable("xp_log", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  amount: integer("amount").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+});
+
+/** Служебные значения (например, дата последнего расчёта лиг). */
+export const appMeta = sqliteTable("app_meta", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+});
+
+/** Языки, которые изучает пользователь (можно несколько одновременно). */
+export const userLanguages = sqliteTable(
+  "user_languages",
+  {
+    userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+    language: text("language").notNull(), // код из src/lib/languages.ts
+    enrolledAt: integer("enrolled_at", { mode: "timestamp" }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.language] })],
+);
 
 export const session = sqliteTable("session", {
   id: text("id").primaryKey(),
@@ -65,6 +93,7 @@ export const levels = sqliteTable("levels", {
   difficulty: text("difficulty").notNull(), // beginner | intermediate | advanced
   theoryMd: text("theory_md").notNull(),
   cardId: text("card_id"),
+  language: text("language").notNull().default("en"), // код языка курса
 });
 
 export const exercises = sqliteTable("exercises", {

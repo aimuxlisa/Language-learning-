@@ -29,6 +29,8 @@ export type LevelDef = {
   cardId?: string;
   theoryMd: string;
   exercises: ExerciseDef[];
+  /** Код языка курса (по умолчанию английский). */
+  language?: string;
 };
 
 export type CardDef = {

@@ -8,6 +8,7 @@ import {
   levels,
   usageLog,
   user,
+  xpLog,
   userAnswers,
   userCards,
   userProgress,
@@ -36,7 +37,7 @@ export async function isLevelUnlocked(userId: string, plan: string, levelId: str
     const trackLevels = await db
       .select()
       .from(levels)
-      .where(eq(levels.track, lvl.track))
+      .where(and(eq(levels.track, lvl.track), eq(levels.language, lvl.language)))
       .orderBy(asc(levels.orderIndex));
     const prev = trackLevels.find((l) => l.orderIndex === lvl.orderIndex - 1);
     if (prev) {
@@ -188,6 +189,7 @@ export async function finishLesson(
     xpEarned = lessonXp(scorePct);
     const [u] = await db.select().from(user).where(eq(user.id, userId));
     await db.update(user).set({ xp: u.xp + xpEarned, updatedAt: now }).where(eq(user.id, userId));
+    await db.insert(xpLog).values({ userId, amount: xpEarned, createdAt: now });
 
     if (lvl.cardId) {
       const owned = await db

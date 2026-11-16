@@ -20,6 +20,7 @@ async function seed() {
       difficulty: lvl.difficulty,
       theoryMd: lvl.theoryMd,
       cardId: lvl.cardId ?? null,
+      language: lvl.language ?? "en",
     });
     await db.insert(exercises).values(
       lvl.exercises.map((e, i) => ({

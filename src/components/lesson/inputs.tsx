@@ -34,10 +34,10 @@ export function QuizInput({
                 onChange(i);
               }
             }}
-            className={`text-left px-4 py-3 border text-sm transition-colors ${
+            className={`text-left px-4 py-3 rounded-xl border text-sm transition-colors ${
               active
-                ? "border-fg bg-raised text-fg"
-                : "border-line text-dim hover:border-dim hover:text-fg"
+                ? "border-violet bg-raised text-fg"
+                : "border-line text-dim hover:border-violet hover:text-fg"
             }`}
           >
             <span className="font-mono text-xs mr-3 text-faint">
@@ -99,7 +99,7 @@ export function WordOrderInput({
   const used = new Set(value);
   return (
     <div className="flex flex-col gap-4">
-      <div className="min-h-13 border border-line bg-raised px-3 py-2.5 flex flex-wrap gap-2 items-center">
+      <div className="min-h-13 rounded-xl border border-line bg-raised px-3 py-2.5 flex flex-wrap gap-2 items-center">
         {value.length === 0 && (
           <span className="text-faint text-sm">Нажимайте на слова ниже…</span>
         )}
@@ -108,7 +108,7 @@ export function WordOrderInput({
             key={pos}
             type="button"
             onClick={() => onChange(value.filter((_, p) => p !== pos))}
-            className="px-2.5 py-1 bg-fg text-bg text-sm hover:opacity-80 transition-opacity"
+            className="px-3 py-1 rounded-full bg-violet text-white text-sm hover:opacity-80 transition-opacity"
           >
             {words[wi]}
           </button>
@@ -121,7 +121,7 @@ export function WordOrderInput({
             type="button"
             disabled={used.has(i)}
             onClick={() => onChange([...value, i])}
-            className="px-2.5 py-1 border border-line text-sm text-dim hover:text-fg hover:border-dim disabled:opacity-25 transition-colors"
+            className="px-3 py-1 rounded-full border border-line text-sm text-dim hover:text-fg hover:border-violet disabled:opacity-25 transition-colors"
           >
             {w}
           </button>
